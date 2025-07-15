@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' http://localhost:5000">
+    <meta name="api-base-url" content="http://localhost:5000">
+    <title>Manufacturing ERP System</title>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- External CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="fas fa-industry"></i>
+                <span>CNC ERP</span>
+            </div>
+            <nav class="nav-menu">
+                <ul>
+                    <li class="active" data-target="dashboard">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Dashboard</span>
+                    </li>
+                    <li data-target="employees">
+                        <i class="fas fa-users"></i>
+                        <span>Employees</span>
+                    </li>
+                    <li data-target="products">
+                        <i class="fas fa-boxes"></i>
+                        <span>Products</span>
+                    </li>
+                    <li data-target="inventory">
+                        <i class="fas fa-warehouse"></i>
+                        <span>Inventory</span>
+                    </li>
+                    <li data-target="sales">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Sales</span>
+                    </li>
+                    <li data-target="reports">
+                        <i class="fas fa-file-alt"></i>
+                        <span>Reports</span>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="content-header">
+                <h1 id="page-title">Dashboard</h1>
+                <div class="user-profile">
+                    <span>Admin</span>
+                    <div class="avatar">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Section -->
+            <section id="dashboard" class="content-section active">
+                <div class="stats-container">
+                    <div class="stat-card">
+                        <div class="stat-icon bg-blue">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Total Employees</h3>
+                            <p id="total-employees">0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon bg-green">
+                            <i class="fas fa-boxes"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Total Products</h3>
+                            <p id="total-products">0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon bg-orange">
+                            <i class="fas fa-rupee-sign"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Monthly Sales</h3>
+                            <p id="monthly-sales">₹0</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="recent-activity">
+                    <h2>Recent Activity</h2>
+                    <div class="activity-list" id="recent-activity">
+                        <!-- Activities will be loaded via JavaScript -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Employees Section -->
+            <section id="employees" class="content-section">
+                <div class="section-header">
+                    <h2>Employee Management</h2>
+                    <button class="btn btn-primary" id="add-employee-btn">
+                        <i class="fas fa-plus"></i> Add Employee
+                    </button>
+                </div>
+                <div class="table-container">
+                    <table id="employees-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Role</th>
+                                <th>Department</th>
+                                <th>Salary</th>
+                                <th>Join Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Employee data will be loaded via JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Products Section -->
+            <section id="products" class="content-section">
+                <div class="section-header">
+                    <h2>Product Management</h2>
+                    <button class="btn btn-primary" id="add-product-btn">
+                        <i class="fas fa-plus"></i> Add Product
+                    </button>
+                </div>
+                <div class="table-container">
+                    <table id="products-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Category</th>
+                                <th>Price</th>
+                                <th>Stock</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Product data will be loaded via JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Other sections (Inventory, Sales, Reports) would go here -->
+            <!-- Content for these sections would be similar in structure -->
+        </main>
+    </div>
+
+    <!-- Employee Modal -->
+    <div class="modal" id="employee-modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h3 id="modal-title">Add New Employee</h3>
+            <form id="employee-form">
+                <input type="hidden" id="emp-id">
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="role">Role</label>
+                    <input type="text" id="role" required>
+                </div>
+                <div class="form-group">
+                    <label for="department">Department</label>
+                    <select id="department" required>
+                        <option value="">Select Department</option>
+                        <option value="Production">Production</option>
+                        <option value="Sales">Sales</option>
+                        <option value="Engineering">Engineering</option>
+                        <option value="Quality Control">Quality Control</option>
+                        <option value="Administration">Administration</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="salary">Salary (₹)</label>
+                    <input type="number" id="salary" min="0" step="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label for="contact">Contact Number</label>
+                    <input type="tel" id="contact" pattern="[0-9]{10}">
+                </div>
+                <div class="form-group">
+                    <label for="join-date">Join Date</label>
+                    <input type="date" id="join-date">
+                </div>
+                <button type="submit" class="btn btn-primary" id="form-submit-btn">Save</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Product Modal (structure similar to employee modal) -->
+    <div class="modal" id="product-modal">
+        <!-- Product form would go here -->
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div class="modal" id="confirm-modal">
+        <div class="modal-content small">
+            <h3 id="confirm-title">Confirm Action</h3>
+            <p id="confirm-message">Are you sure you want to perform this action?</p>
+            <div class="modal-actions">
+                <button class="btn btn-secondary" id="confirm-cancel">Cancel</button>
+                <button class="btn btn-danger" id="confirm-ok">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Container -->
+    <div id="notification-container"></div>
+
+    <!-- JavaScript Files -->
+    <script src="js/db.js"></script> <!-- API communication -->
+    <script src="js/main.js"></script> <!-- Core functionality -->
+    <script src="js/modules/employees.js"></script>
+    <script src="js/modules/products.js"></script>
+    <!-- Other module scripts would be added here -->
+</body>
+</html>
